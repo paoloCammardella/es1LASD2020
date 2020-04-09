@@ -2,99 +2,99 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-/* ************************************************************************** */
-
-#include "../container/container.hpp"
 
 /* ************************************************************************** */
 
-namespace lasd
-{
+  #include "../container/container.hpp"
+
+/* ************************************************************************** */
+
+namespace lasd {
 
 /* ************************************************************************** */
 
 template <typename Data>
-class Vector
-{ // Should extend LinearContainer<Data> and SearchableContainer<Data>
+class Vector : public LinearContainer<Data>, public SearchableContainer<Data>{ // Should extend LinearContainer<Data> and SearchableContainer<Data>
 
 private:
+
   // ...
 
 protected:
-  // using LinearContainer<Data>::???;
 
-  // ...
-
+  using SearchableContainer<Data>::size;
+  Data* items = nullptr; 
 public:
+
   // Default constructor
-  // Vector() specifier;
+  Vector() = default;
 
   // Specific constructor
-  // Vector(argument); // A vector with an initial given dimension.
+  Vector(const ulong); // A vector with an initial given dimension.
 
   // Copy constructor
-  // Vector(argument);
+  Vector(const Vector&);
 
   // Move constructor
-  // Vector(argument);
+  Vector(Vector&&);
 
   /* ************************************************************************ */
 
   // Destructor
-  // ~Vector() specifier;
+  ~Vector();
 
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument);
+  Vector operator=(const Vector&);
 
   // Move assignment
-  // type operator=(argument);
+  Vector operator=(Vector&&);
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers;
-  // type operator!=(argument) specifiers;
+  bool operator==(const Vector&);
+  bool operator!=(const Vector&);
 
   /* ************************************************************************ */
 
   // Specific member functions
 
-  // type Resize(argument) specifiers; // Resize the vector
+  void Resize(ulong); // Resize the vector
 
   /* ************************************************************************ */
 
-  // Specific member functions (inherited from Container)
+  // Spectypeific member functions (inherited from Container)
 
-  // type Clear() specifiers; // Override Container member
+  void Clear() noexcept override; // Override Container member
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from LinearContainer)
 
-  // type Front() specifiers; // Override LinearContainer member
-  // type Back() specifiers; // Override LinearContainer member
+  Data& Front() const override; // Override LinearContainer member (might throw std::length_error)
+  Data& Back() const override; // Override LinearContainer member (might throw std::length_error)
 
-  // type operator[](argument) specifiers; // Override LinearContainer member
+  Data& operator[](const ulong) const override; // Override LinearContainer member (might throw std::out_of_range)
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from SearchableContainer)
 
-  // using typename SearchableContainer<Data>::MapFunctor;
-  // type MapPreOrder(arguments) specifiers; // Override SearchableContainer member
-  // type MapPostOrder(arguments) specifiers; // Override SearchableContainer member
+  using typename SearchableContainer<Data>::MapFunctor;
+  void MapPreOrder(MapFunctor, void *) override; // Override SearchableContainer member
+  void MapPostOrder(MapFunctor, void *) override; // Override SearchableContainer member
 
-  // using typename SearchableContainer<Data>::FoldFunctor;
-  // type FoldPreOrder(arguments) specifiers; // Override SearchableContainer member
-  // type FoldPostOrder(arguments) specifiers; // Override SearchableContainer member
+  using typename SearchableContainer<Data>::FoldFunctor;
+  void FoldPreOrder(FoldFunctor, const void*, void*) const override; // Override SearchableContainer member
+  void FoldPostOrder(FoldFunctor, const void*, void*) const override; // Override SearchableContainer member
 };
 
 /* ************************************************************************** */
 
 #include "vector.cpp"
 
-} // namespace lasd
+}
 
 #endif

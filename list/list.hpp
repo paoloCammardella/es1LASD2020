@@ -94,8 +94,8 @@ public:
 
   // Specific member functions
 
-  // type RemoveFromFront() specifier;
-  // type FrontNRemove() specifier;
+  // type RemoveFromFront() specifier; // (might throw std::length_error)
+  // type FrontNRemove() specifier; // (might throw std::length_error)
   // type InsertAtFront(argument) specifier; // Copy of the value
   // type InsertAtFront(argument) specifier; // Move of the value
 
@@ -112,10 +112,10 @@ public:
 
   // Specific member functions (inherited from LinearContainer)
 
-  // type Front() specifiers; // Override LinearContainer member
-  // type Back() specifiers; // Override LinearContainer member
+  // type Front() specifiers; // Override LinearContainer member (might throw std::length_error)
+  // type Back() specifiers; // Override LinearContainer member (might throw std::length_error)
 
-  // type operator[](argument) specifiers; // Override LinearContainer member
+  // type operator[](argument) specifiers; // Override LinearContainer member (might throw std::out_of_range)
 
   /* ************************************************************************ */
 

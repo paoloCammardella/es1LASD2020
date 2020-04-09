@@ -1,37 +1,23 @@
 #include <iostream>
 
 // Specific member functions (Container)
-
 bool lasd::Container::Empty() const noexcept
 {
-    if (this->size == 0)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return size == 0;
 }
 
-ulong lasd::Container::Size() const noexcept
+unsigned long lasd::Container::Size() const noexcept
 {
-    return this->size;
+    return size;
 }
+// ...
 
 /* ************************************************************************** */
 
 // Specific member functions (LinearContainer)
 
-// template <typename Data>
-// Data lasd::LinearContainer<Data>::Front() const{
+// ...
 
-//     if (size != 0)
-//     {
-        
-//     }
-
-// }
 /* ************************************************************************** */
 
 // Specific member functions (TestableContainer)
@@ -42,4 +28,22 @@ ulong lasd::Container::Size() const noexcept
 
 // Specific member functions (SearchableContainer)
 
+template <typename Data>
+void FoldExists(const Data &data, const void *value, void *found)
+{
+    if (data == *((Data *)value))
+    {
+        *((bool *)found) = true;
+    }
+}
+
+template <typename Data>
+bool lasd::SearchableContainer<Data>::Exists(const Data &) const noexcept
+{
+    Data data;
+    bool found = false;
+    FoldPostOrder(&FoldExists, &data, &found);
+
+    return found;
+}
 // ...
