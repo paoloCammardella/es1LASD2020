@@ -42,7 +42,7 @@ bool lasd::SearchableContainer<Data>::Exists(const Data &) const noexcept
 {
     Data data;
     bool found = false;
-    FoldPostOrder(&FoldExists, &data, &found);
+    FoldPostOrder(&FoldExists<Data>, &data, &found);
 
     return found;
 }

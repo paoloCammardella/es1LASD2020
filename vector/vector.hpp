@@ -76,7 +76,7 @@ public:
   Data& Front() const override; // Override LinearContainer member (might throw std::length_error)
   Data& Back() const override; // Override LinearContainer member (might throw std::length_error)
 
-  Data& operator[](const ulong) const override; // Override LinearContainer member (might throw std::out_of_range)
+  Data& operator[](const ulong) override; // Override LinearContainer member (might throw std::out_of_range)
 
   /* ************************************************************************ */
 

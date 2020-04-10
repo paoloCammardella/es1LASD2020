@@ -13,7 +13,7 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-class List { // Should extend LinearContainer<Data> and SearchableContainer<Data>
+class List : public LinearContainer<Data>, public SearchableContainer<Data>{ // Should extend LinearContainer<Data> and SearchableContainer<Data>
 
 private:
 
@@ -21,41 +21,43 @@ private:
 
 protected:
 
-  // using LinearContainer<Data>::???;
+  using LinearContainer<Data>::size;
 
   struct Node
   {
 
     // Data
-    // ...
+    Data dato;
+    Node* next = nullptr;
 
     /* ********************************************************************** */
 
     // Specific constructors
-    // ...
+    Node(Data&);
 
     // Copy constructor
-    // ...
+    Node(const Node&);
 
     // Move constructor
-    // ...
+    Node(Node&&);
 
     /* ********************************************************************** */
 
     // Destructor
-    // ...
+    ~Node();
 
     /* ********************************************************************** */
 
     // Comparison operators
-    // ...
+    bool operator==(const Node&);
+    bool operator!=(const Node&);
 
     /* ********************************************************************** */
 
     // Specific member functions
-
-    // ...
-
+    void read() const;
+    void write();
+    void whosNext() const;
   };
 
   // ...
@@ -63,57 +65,57 @@ protected:
 public:
 
   // Default constructor
-  // List() specifier;
+  List() = default;
 
   // Copy constructor
-  // List(argument);
+  List(const List&);
 
   // Move constructor
-  // List(argument);
+  List(List&&);
 
   /* ************************************************************************ */
 
   // Destructor
-  // ~List() specifier;
+   ~List() noexcept;
 
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument);
+  List &operator=(const List&);
 
   // Move assignment
-  // type operator=(argument);
+  List &operator=(List&&);
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers;
-  // type operator!=(argument) specifiers;
+  bool operator==(const List&) const;
+  bool operator!=(const List&) const;
 
   /* ************************************************************************ */
 
   // Specific member functions
 
-  // type RemoveFromFront() specifier; // (might throw std::length_error)
-  // type FrontNRemove() specifier; // (might throw std::length_error)
-  // type InsertAtFront(argument) specifier; // Copy of the value
-  // type InsertAtFront(argument) specifier; // Move of the value
+  void RemoveFromFront(); // (might throw std::length_error)
+  void FrontNRemove(); // (might throw std::length_error)
+  void InsertAtFront(const Data&); // Copy of the value
+  void InsertAtFront(Data&&); // Move of the value
 
-  // type InsertAtBack(argument) specifier; // Copy of the value
-  // type InsertAtBack(argument) specifier; // Move of the value
+  void InsertAtBack(Data&); // Copy of the value
+  void InsertAtBack(const Data&&); // Move of the value
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from Container)
 
-  // type Clear() specifiers; // Override Container member
+  void Clear() noexcept; // Override Container member
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from LinearContainer)
 
-  // type Front() specifiers; // Override LinearContainer member (might throw std::length_error)
-  // type Back() specifiers; // Override LinearContainer member (might throw std::length_error)
+  void Front() override; // Override LinearContainer member (might throw std::length_error)
+  void Back() override; // Override LinearContainer member (might throw std::length_error)
 
   // type operator[](argument) specifiers; // Override LinearContainer member (might throw std::out_of_range)
 
@@ -121,21 +123,21 @@ public:
 
   // Specific member functions (inherited from SearchableContainer)
 
-  // using typename SearchableContainer<Data>::MapFunctor;
-  // type MapPreOrder(arguments) specifiers; // Override SearchableContainer member
-  // type MapPostOrder(arguments) specifiers; // Override SearchableContainer member
+  using typename SearchableContainer<Data>::MapFunctor;
+  void MapPreOrder(MapFunctor, void *) const override; // Override SearchableContainer member
+  void MapPostOrder(MapFunctor, void *) const override; // Override SearchableContainer member
 
-  // using typename SearchableContainer<Data>::FoldFunctor;
-  // type FoldPreOrder(arguments) specifiers; // Override SearchableContainer member
-  // type FoldPostOrder(arguments) specifiers; // Override SearchableContainer member
+  using typename SearchableContainer<Data>::FoldFunctor;
+  void FoldPreOrder(FoldFunctor, const void *, void *) override; // Override SearchableContainer member
+  void FoldPostOrder(FoldFunctor, const void *, void *) override; // Override SearchableContainer member
 
 protected:
 
-  // type MapPreOrder(arguments) specifiers; // Accessory function executing from one point of the list onwards
-  // type MapPostOrder(arguments) specifiers; // Accessory function executing from one point of the list onwards
+  void MapPreOrder(MapFunctor, Node *); // Accessory function executing from one point of the list onwards
+  void MapPostOrder(MapFunctor, Node *); // Accessory function executing from one point of the list onwards
 
-  // type FoldPreOrder(arguments) specifiers; // Accessory function executing from one point of the list onwards
-  // type FoldPostOrder(arguments) specifiers; // Accessory function executing from one point of the list onwards
+  void FoldPreOrder(FoldFunctor, const void *, Node *) const; // Accessory function executing from one point of the list onwards
+  void FoldPostOrder(FoldFunctor, const void*, Node *) const; // Accessory function executing from one point of the list onwards
 
 };
 

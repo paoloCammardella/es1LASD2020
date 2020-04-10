@@ -26,16 +26,16 @@ lasd::Vector<Data>::Vector(Vector<Data> &&vector2)
 {
     std::swap(items, vector2.items);
     std::swap(size, vector2.size);
-    delete vector2;
+    
 }
 
 //Destructor
 template <typename Data>
 lasd::Vector<Data>::~Vector()
 {
-    for (Data v : items)
+    for (ulong i = 0; i < size; i++)
     {
-        v = NULL;
+        items[i] = 0;
     }
     delete[] items;
 }
@@ -138,9 +138,9 @@ void lasd::Vector<Data>::Resize(ulong size)
 template <typename Data>
 void lasd::Vector<Data>::Clear() noexcept
 {
-    for (Data v : items)
+    for (ulong i = 0; i < size; i++)
     {
-        v = NULL;
+        items[i] = 0;
     }
     items = nullptr;
     size = 0;
@@ -176,7 +176,7 @@ Data &lasd::Vector<Data>::Back() const
 
 //operator []
 template <typename Data>
-Data &lasd::Vector<Data>::operator[](const ulong i) const
+Data &lasd::Vector<Data>::operator[](const ulong i)
 {
     if (i < size)
     {
