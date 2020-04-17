@@ -80,7 +80,7 @@ public:
   // type Back() specifiers;
   virtual Data &Back() const = 0;
   // type operator[](argument) specifiers;
-  virtual Data &operator[](const ulong) = 0;
+  virtual Data &operator[](const ulong) const = 0;
 };
 
 /* ************************************************************************** */

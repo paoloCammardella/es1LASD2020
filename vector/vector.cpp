@@ -67,7 +67,7 @@ lasd::Vector<Data> lasd::Vector<Data>::operator=(Vector<Data> &&v)
 
 //Equality operator
 template <typename Data>
-bool lasd::Vector<Data>::operator==(const Vector &vector2)
+bool lasd::Vector<Data>::operator==(const Vector<Data> &vector2)
 {
 
     bool equal = true;
